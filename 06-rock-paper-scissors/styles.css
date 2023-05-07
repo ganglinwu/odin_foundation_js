@@ -1,0 +1,22 @@
+
+div {
+    display: flex;
+    justify-content: center;
+}
+
+.container .guibox {
+    border: 3px solid black;
+    height:auto;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.container .guibox > div {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.container .guibox .button-container {
+    justify-content: space-evenly;
+}
