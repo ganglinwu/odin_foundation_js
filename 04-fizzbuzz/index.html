@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Fizz Buzz</h1>
+    <p>Enter a number less than 50 and watch Fizz Buzz go!</p>
+    <script>
+        let num = prompt('Enter a number less than 50','10');
+
+        let out_list = [];
+
+        for (i=1; i<=num; i++) {
+            if (i%3===0) {
+                if (i%5===0) {
+                    out_list.push('FizzBuzz');
+                }
+                else {
+                    out_list.push('Fizz');
+                }
+            }
+            else if (i%5===0){
+                out_list.push('Buzz');
+            }
+        }
+    </script>
+    <p id="output"></p>
+    <script>
+                document.getElementById('output').innerHTML = out_list.join('<br>');
+    </script>
+</body>
+</html>
