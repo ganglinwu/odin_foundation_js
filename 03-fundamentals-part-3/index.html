@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function add7(num) {
+            return num+7;
+        }
+
+        function multiply(num1,num2) {
+            return num1*num2;
+        }
+
+        function capitalize(str) {
+            let newStr = str.toLowerCase();
+            return (newStr.at(0).toUpperCase() + newStr.slice(1));
+        }
+
+        function lastletter(str) {
+            return str.at(-1);
+        }
+
+        alert(`1 + 7 = ${add7(1)}`);
+        alert(`2 * 3 = ${multiply(2,3)}`);
+        alert(`The string \'alaska\' with the first letter capitalized is ${capitalize('alaska')}`);
+        alert(`The last letter of the strig \'alaska\' is ${lastletter('alaska')}`);
+    </script>
+</body>
+</html>
