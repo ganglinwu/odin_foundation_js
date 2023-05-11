@@ -33,12 +33,24 @@
             
             <p>Please Choose</p>
             <div class="button-container">
-                <button name="rock" type="button">Rock</button>
-                <button name="paper" type="button">Paper</button>
-                <button name="scissors" type="button">Scissors</button>
+                
+                <button name="rock" type="button" onclick="RPS('rock')">
+                    Rock
+                </button>
+                
+                <button name="paper" type="button" onclick="RPS('paper')">
+                    Paper
+                </button>
+                
+                <button name="scissors" type="button" onclick="RPS('scissors')">
+                    Scissors
+                </button>
+                 
             </div>
             <br>
-            <p>Computer chose</p><p id="comChoice"></p>
+            <p>Computer Chose</p><p id="comChoice"></p>
+            <br>
+            <p id="winner"></p>
         </div>
     </div>
 </body>
