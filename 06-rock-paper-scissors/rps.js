@@ -1,14 +1,16 @@
 let rpsArray = ['rock', 'paper', 'scissors'];
 
+// let's initialize some counters for stats
+var gamesPlayed = playerWins = computerWins = winPercentage = 0;
 
 function computerChoice() {
-    comChoice = rpsArray.at(Math.floor(Math.random()*10)%3); //generates random number 0, 1 or 2
+    let comChoice = rpsArray.at(Math.floor(Math.random()*10)%3); //generates random number 0, 1 or 2
     return comChoice;
 }    
 
 function RPS(playerChoice) {
-    
-    // RPS will return score in 3 different values
+
+    // RPS win 3 different values
     // -1 means computer win
     // 0 means draw or tie
     // 1 means player win
@@ -19,7 +21,7 @@ function RPS(playerChoice) {
     
     // playerChoice will be user input from html page
     // computerChoice will be from function above
-    let computerChoice = computerChoice(); 
+    let compChoice = computerChoice(); 
 
 
     // to compare rock, paper, scissors let's implement values
@@ -33,7 +35,7 @@ function RPS(playerChoice) {
         if (playerChoice === rpsArray.at(i)) {
             playerValue = i;
         }    
-        if (computerChoice === rpsArray.at(i)) {
+        if (compChoice === rpsArray.at(i)) {
             computerValue = i;
         }    
     }        
@@ -42,30 +44,49 @@ function RPS(playerChoice) {
     let difference = playerValue - computerValue;
 
     if (playerValue === computerValue) {
-        score = 0
-        return score;
+        score = 0;
     }
 
     else if (Math.abs(difference) === 2) {
         if (difference < 0) {
             score = 1;
-            return score;
         }
         else {
             score = -1;
-            return score;
         }
     }
     
     else {
         if (difference < 0) {
             score = -1;
-            return score;
         }
         else {
             score = 1;
-            return score;
         }
         
     }
+    
+    // let's update html page with computer choice
+
+    document.getElementById('comChoice').innerHTML = `Computer chose: ${compChoice}`;
+
+    // let's update stats and counters
+    gamesPlayed += 1;
+    if (score == 1) {
+        playerWins += 1;
+        document.getElementById('winner').innerHTML = `You chose: ${playerChoice} <br> You WIN!`;
+    }
+    else if (score == -1) {
+        computerWins += 1;
+        document.getElementById('winner').innerHTML = `You chose: ${playerChoice} <br> You lost..`;
+    }
+    else {
+        document.getElementById('winner').innerHTML = `You chose: ${playerChoice} <br> It's a tie`;
+    }
+    winPercentage = playerWins/gamesPlayed*100
+    
+    document.getElementById('gamesPlayed').innerHTML = `${gamesPlayed}`;
+    document.getElementById('playerScore').innerHTML = `${playerWins}`;
+    document.getElementById('comScore').innerHTML = `${computerWins}`;
+    document.getElementById('winPercentage').innerHTML = `${winPercentage}`;
 }
