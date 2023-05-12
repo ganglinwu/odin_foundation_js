@@ -83,10 +83,10 @@ function RPS(playerChoice) {
     else {
         document.getElementById('winner').innerHTML = `You chose: ${playerChoice} <br> It's a tie`;
     }
-    winPercentage = playerWins/gamesPlayed*100
+    winPercentage = (playerWins/gamesPlayed*100).toFixed(2);
     
     document.getElementById('gamesPlayed').innerHTML = `${gamesPlayed}`;
     document.getElementById('playerScore').innerHTML = `${playerWins}`;
     document.getElementById('comScore').innerHTML = `${computerWins}`;
-    document.getElementById('winPercentage').innerHTML = `${winPercentage}`;
+    document.getElementById('winPercentage').innerHTML = `${winPercentage}%`;
 }
