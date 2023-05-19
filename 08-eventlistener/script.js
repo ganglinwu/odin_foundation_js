@@ -1,4 +1,5 @@
-const btn1 = document.querySelector('#btn1');
+// declare as var because I need btn1 in other js files
+var btn1 = document.querySelector('#btn1');
 
 btn1.addEventListener('click', () => {
     alert('Hello World');
