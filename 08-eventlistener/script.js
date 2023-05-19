@@ -41,11 +41,11 @@ function changeBgWhite() {
 
 // how to put button under two levels of div
 
-const container = document.createElement('div');
+var container = document.createElement('div');
 container.classList.add('container');
 
 
-const wrapper1 = document.createElement('div');
+var wrapper1 = document.createElement('div');
 wrapper1.classList.add('wrapper1');
 wrapper1.style.cssText = 'background-color: green; border: 0.1cm solid pink;'
 
