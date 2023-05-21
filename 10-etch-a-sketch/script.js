@@ -1,18 +1,28 @@
 
-const n = 16;
+const gridsize = 16;
+
 const container = document.querySelector('.container');
 container.style.cssText = 'display:flex; flex-direction:column; height:100vh;'
-for (let i = 0; i < n; i++) {
-    let a = document.createElement('div');
-    a.classList.add(`row${i+1}`);
-    a.style.cssText= 'display:flex; flex:1;'
-    for (let k = 0; k < n; k++) {
-        let b = document.createElement('div');
-        b.classList.add(`box${k+1},${16-i}`);
-        b.style.cssText= 'border: 1px solid black; flex: 1;'
-        a.appendChild(b);
+
+
+for (let i = 0; i < gridsize; i++) {
+    
+    let rowDiv = document.createElement('div');
+    rowDiv.classList.add(`row${i+1}`);
+    rowDiv.style.cssText= 'display:flex; flex:1;'
+    
+    for (let k = 0; k < gridsize; k++) {
+        let box = document.createElement('div');
+        box.classList.add(`box${k+1},${16-i}`);
+        box.style.cssText= 'border: 1px solid black; flex: 1; transition: 0.2s;'
+        box.addEventListener('mouseover', ()=> {
+            box.classList.add('hover');});
+        box.addEventListener('mouseout', ()=> {
+            box.classList.remove('hover');
+            box.classList.add('drawn')});
+        rowDiv.appendChild(box);
     }
-    container.appendChild(a);
+    container.appendChild(rowDiv);
 }
 
 //need to look into: how not to let margin eat into available space

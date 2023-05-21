@@ -1,0 +1,9 @@
+.hover {
+    transition: 0.2ms;
+    background-color: aquamarine;
+}
+
+.drawn {
+    transition: 0.5s;
+    background-color: mediumaquamarine;
+}
