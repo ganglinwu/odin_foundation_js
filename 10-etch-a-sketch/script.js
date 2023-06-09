@@ -1,8 +1,8 @@
 
-const gridsize = 16;
+let gridsize = 16;
 
 const container = document.querySelector('.container');
-container.style.cssText = 'display:flex; flex-direction:column; height:100vh;'
+container.style.cssText = 'display:flex; flex-direction:column; height:80vh; width: 90vw; box-sizing :border-box; margin:auto;'
 
 
 for (let i = 0; i < gridsize; i++) {
