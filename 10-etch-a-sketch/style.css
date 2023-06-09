@@ -1,3 +1,7 @@
+h1 {
+    text-align: center;
+}
+
 .hover {
     transition: 0.2ms;
     background-color: aquamarine;
