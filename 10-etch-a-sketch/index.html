@@ -8,7 +8,55 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Etch-a-sketch (An The Odin Project Assignment)</h1>
+    <h1>Etch-a-sketch (A 'The Odin Project' Assignment)</h1>
+    <div class="menu">
+        <div class="dropdown">
+            <button class="dropbtn">Change Color</button>
+            <div class="dropdown-content">
+                <a href="#">Color 1</a>
+                <a href="#">Color 2</a>
+                <a href="#">Color 3</a>
+                <a href="#">Color 4</a>
+                <a href="#">Color Wheel</a>
+        </div>
+        </div>
+        <button data-key='m' class="erase-all">
+            <kbd>M</kbd>
+            <span class="mode">Erase <br>ALL</span>
+        </button>
+
+        <button data-key='q' class="erase-mode">
+            <kbd>Q</kbd>
+            <span class="mode">Erase <br>Mode</span>
+        </button>
+
+        <button data-key='w' class="pen-up">
+            <kbd>W</kbd>
+            <span class="mode">Pen <br>Up</span>
+        </button>
+        <button data-key='e' class="pen-down">
+            <kbd>E</kbd>
+            <span class="mode">Pen <br>Down</span>
+        </button>
+        <button data-key='p' class="dark-mode">
+            <kbd>P</kbd>
+            <span class="mode">Dark <br> Mode</span>
+        </button>
+        <div id="density-selector">
+            <label for="grid-density">Box per row/column?</label>
+            <select name="grid-density" id="grid-density">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="16" selected>16 (Default)</option>
+                <option value="50">50</option>
+                <option value="-1">Input a value</option>
+            </select>
+            <p id="grid-density-count"></p>
+        </div>
+        <div id="colour-mode-display">
+        <p id="colour-mode"></p>
+        </div>
+    </div>
     <div class="container"></div>
 </body>
 <script src="script.js"></script>
