@@ -1,15 +1,30 @@
+html {
+    --main-background-color: #ffffff;
+    --drawn-color: ##66cdaa;
+    --hover-color: #7fffd4;
+    --erase-hover-color: #f9f9f9;
+    --erase-color: #ffffff;
+    --dark-mode-bg: #000000;
+    --dark-mode-erase: #000000;
+    --dark-mode-erase-hover: #201f1f;
+}
+
+body {
+    background-color: var(--main-background-color);
+}
+
 h1 {
     text-align: center;
 }
 
 .hover {
     transition: 0.2ms;
-    background-color: aquamarine;
+    background-color: var(--hover-color);
 }
 
 .drawn {
     transition: 0.5s;
-    background-color: mediumaquamarine;
+    background-color: #66cdaa;
 }
 
 .menu {
@@ -39,7 +54,11 @@ display: inline-block;
   }
 
 .dropdown:hover .dropbtn {
-background-color: #9bd0ad;
+background-color: var(--hover-color);
+}
+
+.dropdown .dropbtn {
+    background-color: #66cdaa; 
 }
 
 button {
@@ -48,7 +67,7 @@ border-radius: .25rem;
 margin: 0.5rem;
 font-size: 0.75rem;
 padding: 0.5rem .25rem;
-transition: all .2s ease;
+transition: all .7s ease;
 width: 5rem;
 text-align: center;
 color: white;

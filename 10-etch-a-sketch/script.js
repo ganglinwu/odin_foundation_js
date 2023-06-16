@@ -1,14 +1,17 @@
+"use strict";
 
 let gridsize = 16;
 draw(gridsize);
 
+/* ---------------------------------------------------*/
+/* ---------------- Draw Grid Feature ----------------*/
+/* ---------------------------------------------------*/
 
-
-
+/* function to draw grid */
 function draw(gridsize) {
     let container = document.querySelector('.container');
-    container.style.cssText = 'display:flex; flex-direction:column; height:80vh; width: 90vw; box-sizing :border-box; margin:auto;'
-    container.replaceChildren();
+    container.style.cssText = 'display:flex; flex-direction:column; height:80vh; width: 90vw; box-sizing: border-box; margin: auto;'
+    container.replaceChildren(); //erase grid
     for (let i = 0; i < gridsize; i++) {
         let rowDiv = document.createElement('div');
         rowDiv.classList.add(`row${i+1}`);
@@ -29,21 +32,7 @@ function draw(gridsize) {
     }
     document.getElementById('grid-density-count').innerText = `Current number of rows/columns: ${gridsize}`;
 }
-
-window.addEventListener('keydown', (e)=> {
-    console.log(e.key);
-    let key = document.querySelector(`button[data-key="${e.key}"]`);
-    if (!key) return; // stop null error if unexpected keystroke
-    let arr = Array.from(key.classList); //check active classes, see if selected already toggled on
-    console.log(arr);
-    if (arr.includes('selected')) { //toggle off if already on, else toggle on
-        key.classList.remove('selected');
-    }
-    else {
-        key.classList.add('selected');
-    } 
-})
-
+/* event listener for change of grid density */
 const gridDensity = document.getElementById('grid-density');
 
 gridDensity.addEventListener('change', (e)=>{
@@ -62,3 +51,51 @@ gridDensity.addEventListener('change', (e)=>{
         }
     }
 })
+
+/* ----------------------------------------------------------*/
+/* ---------------- End of Draw Grid Feature ----------------*/
+/* ----------------------------------------------------------*/
+
+
+
+
+
+/* ---------------------------------------------------*/
+/* ---------------- Erase All Feature ----------------*/
+/* ---------------------------------------------------*/
+
+
+/* helper function: confirm with user to erase */
+function confirmEraseALL() {
+    eraseAllbtn.classList.add('selected')
+    setTimeout(()=> {
+        if (confirm('Are you sure you want to ERASE ALL?')) {
+            draw(gridsize);
+        }
+        else {
+            alert('Erase All cancelled. Press ENTER or ESC to continue.')
+        }
+    }, 700)
+    setTimeout(()=> eraseAllbtn.classList.remove('selected'), 1400);
+}
+
+
+/* event listener for click*/
+const eraseAllbtn = document.getElementsByClassName('erase-all')[0]; //getElementsbyClass returns HTMLCollection(Array like object) even when there's only one element!
+eraseAllbtn.addEventListener('click', confirmEraseALL)
+
+/* event listener for keypress*/
+window.addEventListener('keypress', (e)=> {
+    if (e.key.toLowerCase()=='m') {
+        confirmEraseALL();
+    }
+    else {
+        return;
+    }
+})
+
+
+/* ----------------------------------------------------------*/
+/* ---------------- End of Erase All Feature ----------------*/
+/* ----------------------------------------------------------*/
+
