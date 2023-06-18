@@ -14,17 +14,17 @@ const boxes = document.getElementsByClassName('box-grid');
 /* ---------------------------------------------------*/
 
 /* helper function to darken color by 20% */
-function darkenColor(hexString) {
+function darkenColor(hexString, percentNum) {
     // split hex string into array with length 7
     let hexArr = hexString.split('');
 
     // splice from index 1(so that we skip # symbol) and take 2 elements
     // note that splicing modifies hexArr, so we splice same section of arr everytime
     // join them together, parse to integer from hexadecimal(base-16)
-    // multiply by 0.8 to darken, and round to whole number
-    let r = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*0.8);
-    let g = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*0.8);
-    let b = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*0.8);
+    // multiply to darken, and round to whole number
+    let r = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*(100-percentNum)/100);
+    let g = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*(100-percentNum)/100);
+    let b = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*(100-percentNum)/100);
 
     // convert back to hexadecimal, concatenate together with # symbol
     return(`#${r.toString(16)}${g.toString(16)}${b.toString(16)}`)
@@ -47,10 +47,6 @@ function draw(gridsize) {
             box.classList.add('box-grid');
             box.classList.add(`box${k+1},${16-i}`);
             box.style.cssText= 'border: 1px solid #f9f9f9; flex: 1; transition: 0.2s;'
-            box.addEventListener('mouseover', ()=> {
-                box.style.background = `${currentHoverColor}`});
-            box.addEventListener('mouseout', ()=> {
-                box.style.background = `${currentDrawnColor}`});
             rowDiv.appendChild(box);
         }
         container.appendChild(rowDiv);
@@ -133,13 +129,15 @@ const eraseModebtn = document.getElementsByClassName('erase-mode')[0];
 /* erase mode function*/
 function eraseMode() {
     if (eraseModebtn.classList.contains('selected')) {
-        currentDrawnColor = darkenColor(currentHoverColor);
+        currentDrawnColor = darkenColor(currentHoverColor, 20); // darken Hover colour by 20%
         eraseModebtn.classList.remove('selected');
         Array.from(boxes).forEach((box)=>
             box.addEventListener('mouseover', ()=> {
                 box.style.background = `${currentHoverColor}`;
             })
         );
+        // .forEach method only allows ONE callback function
+        // until I am more proficient with JS, this will have to do
         Array.from(boxes).forEach((box)=>
             box.addEventListener('mouseout', ()=> {
                 box.style.background = `${currentDrawnColor}`;
@@ -158,6 +156,16 @@ function eraseMode() {
                 box.style.background = '#ffffff';
             })
         );
+        // deactivate other buttons
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((btn)=>{
+        if (btn.dataset.key=='q') {
+            console.log('');
+        }
+        else {
+            btn.classList.remove('selected')
+        }
+        })
     }
 }
 
@@ -177,4 +185,76 @@ window.addEventListener('keypress', (e)=> {
 
 /* -----------------------------------------------------------*/
 /* ---------------- End of Erase Mode Feature ----------------*/
+/* -----------------------------------------------------------*/
+
+
+
+/* ----------------------------------------------------*/
+/* ---------------- Random RGB Feature ----------------*/
+/* ----------------------------------------------------*/
+
+let randomColorbtn = document.getElementsByClassName('random-color')[0];
+
+/* random hexcode rgb function*/
+function randomHexCode() {
+    let r = Math.floor(Math.random()*255).toString(16);
+    let g = Math.floor(Math.random()*255).toString(16);
+    let b = Math.floor(Math.random()*255).toString(16);
+    return(`#${r}${g}${b}`)
+}
+
+/* random colour function*/
+function randomColorMode() {
+    if (randomColorbtn.classList.contains('selected')) {
+        currentDrawnColor = darkenColor(currentHoverColor, 20); // darken Hover colour by 20%
+        randomColorbtn.classList.remove('selected');
+        const boxes = document.querySelectorAll('.box-grid');
+        boxes.forEach(box => box.addEventListener('mouseover', ()=> {
+            box.style.background = currentHoverColor;
+        }))
+        boxes.forEach(box => box.addEventListener('mouseout', ()=> {
+            box.style.background = currentDrawnColor;
+        }))
+
+    }
+    else {
+        let ranCol = randomHexCode();
+        let ranColDarkened = darkenColor(ranCol, 20);
+        randomColorbtn.classList.add('selected');
+        const boxes = document.querySelectorAll('.box-grid');
+        boxes.forEach(box => box.addEventListener('mouseover', ()=> {
+            box.style.background = ranCol;
+        }))
+        boxes.forEach(box => box.addEventListener('mouseout', ()=> {
+            box.style.background = ranColDarkened;
+            ranCol = randomHexCode();
+            ranColDarkened = darkenColor(ranCol, 20);
+        }))
+        // deactivate other buttons
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((btn)=>{
+        if (btn.dataset.key=='r') {
+            console.log('');
+        }
+        else {
+            btn.classList.remove('selected')
+        }
+        })
+    }
+}
+/* event listener for click */
+randomColorbtn.addEventListener('click', randomColorMode);
+
+/* event listener for keypress */
+window.addEventListener('keypress', (e)=> {
+    if (e.key.toLowerCase()=='r') {
+        randomColorMode();
+    }
+    else {
+        return;
+    }
+})
+
+/* -----------------------------------------------------------*/
+/* ---------------- End of Random RGB Feature ----------------*/
 /* -----------------------------------------------------------*/
