@@ -10,16 +10,12 @@
 <body>
     <h1>Etch-a-sketch (A 'The Odin Project' Assignment)</h1>
     <div class="menu">
-        <div class="dropdown">
-            <button class="dropbtn">Change Color</button>
-            <div class="dropdown-content">
-                <a href="#">Color 1</a>
-                <a href="#">Color 2</a>
-                <a href="#">Color 3</a>
-                <a href="#">Color 4</a>
-                <a href="#">Color Wheel</a>
-        </div>
-        </div>
+        
+        <button data-key='c' class="color-picker">
+            <kbd>C</kbd>
+            <span class="mode">Color Picker<br>Mode</span>
+        </button>
+        
         <button data-key='m' class="erase-all">
             <kbd>M</kbd>
             <span class="mode">Erase <br>ALL</span>
@@ -28,6 +24,16 @@
         <button data-key='q' class="erase-mode">
             <kbd>Q</kbd>
             <span class="mode">Erase <br>Mode</span>
+        </button>
+        
+        <button data-key='r' class="random-color">
+            <kbd>R</kbd>
+            <span class="mode">Random Color</span>
+        </button>
+        
+        <button data-key='p' class="progressive-dark">
+            <kbd>P</kbd>
+            <span class="mode">Darker & Darker..</span>
         </button>
 
         <div id="density-selector">
