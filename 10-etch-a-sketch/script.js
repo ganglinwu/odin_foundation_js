@@ -26,6 +26,12 @@ function darkenColor(hexString, percentNum) {
     let g = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*(100-percentNum)/100);
     let b = Math.floor(parseInt(hexArr.splice(1,2).join(''), 16)*(100-percentNum)/100);
 
+    // since we use this function to lighten colors by using -ve percentage
+    // we need to be careful not to have int overflow
+    r = Math.min(Math.max(r,0),255)
+    g = Math.min(Math.max(g,0),255)
+    b = Math.min(Math.max(b,0),255)
+
     // convert back to hexadecimal, concatenate together with # symbol
     return(`#${r.toString(16)}${g.toString(16)}${b.toString(16)}`)
 }
