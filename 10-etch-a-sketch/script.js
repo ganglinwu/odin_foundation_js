@@ -13,7 +13,7 @@ const boxes = document.getElementsByClassName('box-grid');
 /* ---------------- Draw Grid Feature ----------------*/
 /* ---------------------------------------------------*/
 
-/* helper function to darken color by 20% */
+/* helper function to darken color by percentNum% */
 function darkenColor(hexString, percentNum) {
     // split hex string into array with length 7
     let hexArr = hexString.split('');
@@ -258,3 +258,33 @@ window.addEventListener('keypress', (e)=> {
 /* -----------------------------------------------------------*/
 /* ---------------- End of Random RGB Feature ----------------*/
 /* -----------------------------------------------------------*/
+
+
+
+/* ------------------------------------------------------*/
+/* ---------------- Color Picker Feature ----------------*/
+/* ------------------------------------------------------*/
+
+const colorPicker = document.getElementById('colorPicker');
+
+// helper function to set currentDrawnColor
+function setDrawnColor(color) {
+    currentDrawnColor = color;
+    currentHoverColor = darkenColor(color, -20);
+}
+
+// event listener for change of colors
+colorPicker.addEventListener('input', (e)=> {
+    setDrawnColor(e.target.value);
+    const boxes = document.querySelectorAll('.box-grid');
+    boxes.forEach(box => box.addEventListener('mouseover', ()=> {
+        box.style.background = currentHoverColor;
+    }))
+    boxes.forEach(box => box.addEventListener('mouseout', ()=> {
+        box.style.background = currentDrawnColor;
+}))
+})
+
+/* -------------------------------------------------------------*/
+/* ---------------- End of Color Picker Feature ----------------*/
+/* -------------------------------------------------------------*/
