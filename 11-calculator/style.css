@@ -1,0 +1,32 @@
+#container {
+    background-color :aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#backing {
+    background-color :yellow;
+    width : 50vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#mini-display {
+    border : 1px solid red;
+    flex: 1;
+}
+
+#display {
+    border : 1px solid blue;
+    flex: 1;
+}
+
+.btn-row {
+    display: flex;
+    justify-content: space-between;
+    border : 1px solid green;
+    flex: 1;
+}
