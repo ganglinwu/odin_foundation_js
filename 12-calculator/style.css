@@ -1,0 +1,80 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#container {
+    background-color :aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#backing {
+    background-color :#f0f0f0;
+    width : 400px;
+    height: 600px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+#mini-display {
+    background: #ffbf0d;
+    text-align: right;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    flex: 1;
+    padding-top: 20px;
+    padding-right: 20px;
+    font-size: 1.2rem;
+}
+
+#display {
+    background-color : #177eb8;
+    text-align: right;
+    font-size: 2rem;
+    flex: 1;
+    padding-top: 35px;
+    padding-right: 20px;
+}
+
+.btn-row {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.btn {
+    text-align: center;
+    padding-top: 20px;
+    border: 1px solid rgb(192, 237, 255);
+    flex : 1;
+    box-sizing: border-box;
+    font-size: 2rem;
+    transition: all 0.07s ease;
+    background: #59d9ff;
+    text-shadow: 0 0 .5rem grey;
+}
+
+.selected {
+    transform: scale(1.1);
+    border-color: cornflowerblue;
+    box-shadow: 0 0 1rem cornflowerblue;
+}
+
+#percent {
+    border-bottom-left-radius: 25px;
+}
+
+#equal {
+    border-bottom-right-radius: 25px;
+    background-color: #99bcb3;
+}
+
+#clear, #divide, #multiply, #backspace, #minus, #plus, #answer {
+    background-color: #99bcb3;
+}
