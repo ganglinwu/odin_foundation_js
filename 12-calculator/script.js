@@ -23,14 +23,17 @@ const operate = (num1, num2, operator)=> {
 
 
 	
+var displayValue = document.getElementById('display').textContent;
+var miniDisplayValue = document.getElementById('mini-display').textContent;
 	
-function updateDisplay(input) {
-	let displayValue = document.getElementById('display').textContent;
-	displayValue = input;
+function updateDisplay(evt) {
+	document.getElementById('display').textContent += evt.target.innerText;
+	this.classList.add('selected');
 }
 
+
+
 function updateMiniDisplay(input) {
-	let miniDisplayValue = document.getElementById('mini-display').textContent;
 	miniDisplayValue = displayValue + ' ' + input;
 }
 
@@ -40,8 +43,12 @@ const btnNumNodeList = document.getElementsByClassName('btn num');
 let btnNumArr = Array.from(btnNumNodeList);
 
 btnNumArr.forEach((btn)=>{
-	btn.addEventListener('click', (e)=>{
-		updateDisplay(e.target.innerText);
+	btn.addEventListener('click', updateDisplay)
+	btn.addEventListener('transitionend', ()=>{
+		btn.classList.remove('selected');
 	})
-})
+	})
+
+const btnPoint = document.getElementById('point');
+btnPoint//use onclick to set null after first trigger
 
