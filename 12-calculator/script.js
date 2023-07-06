@@ -16,9 +16,32 @@ function divide(num1, num2) {
     return answer.toFixed(10-length);
 };
 
-let num1, num2, operator;
 
-function operate(num1, operator(), num2) {
-    return operator(num1, num2);
+const operate = (num1, num2, operator)=> {
+    return operator(num1, num2);	
+	}
+
+
+	
+	
+function updateDisplay(input) {
+	let displayValue = document.getElementById('display').textContent;
+	displayValue = input;
 }
+
+function updateMiniDisplay(input) {
+	let miniDisplayValue = document.getElementById('mini-display').textContent;
+	miniDisplayValue = displayValue + ' ' + input;
+}
+
+
+// addeventlistener for numbers
+const btnNumNodeList = document.getElementsByClassName('btn num');
+let btnNumArr = Array.from(btnNumNodeList);
+
+btnNumArr.forEach((btn)=>{
+	btn.addEventListener('click', (e)=>{
+		updateDisplay(e.target.innerText);
+	})
+})
 
