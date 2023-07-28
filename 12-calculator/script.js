@@ -23,37 +23,71 @@ const operate = (num1, num2, operator)=> {
 
 
 	
-var displayValue = document.getElementById('display').textContent;
-var miniDisplayValue = document.getElementById('mini-display').textContent;
-	
+const displayValue = document.getElementById('display')
+const miniDisplayValue = document.getElementById('mini-display')
+
+// update main display with numbers
 function updateDisplay(evt) {
-	document.getElementById('display').textContent += evt.target.innerText;
+	console.log(evt);
+	if (evt.target.innerText == '.') {
+		if (!displayValue.innerText.includes('.')) {
+			displayValue.textContent += evt.target.innerText;
+			this.classList.add('selected');
+		}
+	}
+	else if (evt.target.classList.value == 'btn num') {
+		displayValue.textContent += evt.target.innerText;
+		this.classList.add('selected');
+	}
+	else return
+}
+
+// update mini display
+function updateMiniDisplay(evt) {
+	miniDisplayValue.textContent += displayValue.textContent + ' ' + evt.target.innerText;
 	this.classList.add('selected');
+
+}
+
+// clear main display
+function clearDisplay() {
+	displayValue.textContent = ''
+}
+
+// remove classlist 'selected' after transition
+function removeSelectedClasslist(evt) {
+	this.classList.remove('selected');
+	if (evt.target.classList.value == 'btn operate') 
+	{ 
+		clearDisplay();
+	}
+	else return
 }
 
 
 
-function updateMiniDisplay(input) {
-	miniDisplayValue = displayValue + ' ' + input;
-}
-
-
-// addeventlistener for numbers
+// event listener for numbers
 const btnNumNodeList = document.getElementsByClassName('btn num');
 let btnNumArr = Array.from(btnNumNodeList);
 
 btnNumArr.forEach((btn)=>{
 	btn.addEventListener('click', updateDisplay)
-	btn.addEventListener('transitionend', ()=>{
-		btn.classList.remove('selected');
-	})
+	btn.addEventListener('transitionend', removeSelectedClasslist)
 	})
 
+
+// event listener for decimal point
 const btnPoint = document.getElementById('point');
-btnPoint.addEventListener('click', (e)=> {
-	if (!document.getElementById('display').textContent.includes('.')) {
-		updateDisplay(e);
-	}
-	else return
-})
+btnPoint.addEventListener('click', updateDisplay)
+btnPoint.addEventListener('transitionend', removeSelectedClasslist)
+
+// event listener for operators and equals button
+
+const btnOperate = document.getElementsByClassName('btn operate');
+let btnOperateArr = Array.from(btnOperate);
+
+btnOperateArr.forEach((btn)=> {
+	btn.addEventListener('click', updateMiniDisplay)
+	btn.addEventListener('transitionend', removeSelectedClasslist)
+	})
 
