@@ -50,5 +50,10 @@ btnNumArr.forEach((btn)=>{
 	})
 
 const btnPoint = document.getElementById('point');
-btnPoint//use onclick to set null after first trigger
+btnPoint.addEventListener('click', (e)=> {
+	if (!document.getElementById('display').textContent.includes('.')) {
+		updateDisplay(e);
+	}
+	else return
+})
 
