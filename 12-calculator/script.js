@@ -18,13 +18,30 @@ function divide(num1, num2) {
 
 
 const operate = (num1, num2, operator)=> {
-    return operator(num1, num2);	
+    switch(operator) {
+		case '+':
+			return add(num1,num2);
+			break;
+		case '-':
+			return subtract(num1,num2);
+			break;
+		case 'x':
+			return multiply(num1,num2);
+			break;
+		case '÷':
+			return divide(num1,num2);
+			break;
+	}
 	}
 
 
 	
 const displayValue = document.getElementById('display')
 const miniDisplayValue = document.getElementById('mini-display')
+const currentAnswer = document.getElementById('current-answer')
+var firstNum = 0;
+var secondNum = null;
+var previousAnswer = 0;
 
 // update main display with numbers
 function updateDisplay(evt) {
@@ -44,24 +61,40 @@ function updateDisplay(evt) {
 
 // update mini display
 function updateMiniDisplay(evt) {
-	miniDisplayValue.textContent += displayValue.textContent + ' ' + evt.target.innerText;
+	miniDisplayValue.textContent += ' ' + displayValue.textContent + ' ' + evt.target.innerText;
+	if (secondNum === null && firstNum === 0) {
+		firstNum = Number(displayValue.textContent);
+	}
+	else if (secondNum === null) {
+		secondNum = Number(displayValue.textContent);
+	}
+	firstNum = operate(firstNum, secondNum, evt.target.innerText);
+	previousAnswer = firstNum;
 	this.classList.add('selected');
 
+}
+
+// update current answer
+function updateCurrentAnswer() {
+	currentAnswer.textContent = previousAnswer;
+	return
 }
 
 // clear main display
 function clearDisplay() {
 	displayValue.textContent = ''
+	return
 }
 
 // remove classlist 'selected' after transition
+// this creates the button pop-up animation
 function removeSelectedClasslist(evt) {
 	this.classList.remove('selected');
 	if (evt.target.classList.value == 'btn operate') 
 	{ 
 		clearDisplay();
 	}
-	else return
+	updateCurrentAnswer();
 }
 
 
@@ -71,23 +104,23 @@ const btnNumNodeList = document.getElementsByClassName('btn num');
 let btnNumArr = Array.from(btnNumNodeList);
 
 btnNumArr.forEach((btn)=>{
-	btn.addEventListener('click', updateDisplay)
 	btn.addEventListener('transitionend', removeSelectedClasslist)
+	btn.addEventListener('click', updateDisplay)
 	})
 
 
 // event listener for decimal point
 const btnPoint = document.getElementById('point');
-btnPoint.addEventListener('click', updateDisplay)
 btnPoint.addEventListener('transitionend', removeSelectedClasslist)
+btnPoint.addEventListener('click', updateDisplay)
+
 
 // event listener for operators and equals button
-
 const btnOperate = document.getElementsByClassName('btn operate');
 let btnOperateArr = Array.from(btnOperate);
 
 btnOperateArr.forEach((btn)=> {
-	btn.addEventListener('click', updateMiniDisplay)
 	btn.addEventListener('transitionend', removeSelectedClasslist)
+	btn.addEventListener('click', updateMiniDisplay)
 	})
 
