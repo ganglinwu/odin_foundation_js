@@ -124,3 +124,8 @@ btnOperateArr.forEach((btn)=> {
 	btn.addEventListener('click', updateMiniDisplay)
 	})
 
+
+
+// divide button does not work as intended,
+// the problem can be replicated by using a long
+// string of numbers and various operators
