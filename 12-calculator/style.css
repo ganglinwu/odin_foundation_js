@@ -35,19 +35,21 @@ body, html {
 
 #current-answer {
     background: #ffbf0d;
+    height: 40px;
+    margin: -20px, 0;
     text-align: right;
-    flex: 1;
-    padding-top: 20px;
+    flex: 1,1,0.5;
+    padding-bottom: 0px;
     padding-right: 20px;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
 }
 
 #display {
     background-color : #177eb8;
     text-align: right;
-    font-size: 1.4rem;
+    font-size: 2rem;
     flex: 1;
-    padding-top: 35px;
+    padding-top: 15px;
     padding-right: 20px;
 }
 
