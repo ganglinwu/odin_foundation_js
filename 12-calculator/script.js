@@ -45,7 +45,6 @@ var previousAnswer = 0;
 
 // update main display with numbers
 function updateDisplay(evt) {
-	console.log(evt);
 	if (evt.target.innerText == '.') {
 		if (!displayValue.innerText.includes('.')) {
 			displayValue.textContent += evt.target.innerText;
@@ -61,6 +60,33 @@ function updateDisplay(evt) {
 
 // update mini display
 function updateMiniDisplay(evt) {
+	//when main display is blank
+	if (displayValue.textContent == '') { 
+
+		//we do not want user to keep inputting ++++++++
+		if (miniDisplayValue.textContent.at(-1) == evt.target.innerText){
+			return 
+		}
+
+		/*
+		However we want to allow users to multiply or divide 
+		by negative numbers
+		*/
+		else if (evt.target.innerText == '-' && miniDisplayValue.textContent.at(-1)=='÷') {
+			miniDisplayValue.textContent += displayValue.textContent + evt.target.innerText;
+		}
+		else if (evt.target.innerText == '-' && miniDisplayValue.textContent.at(-1)=='x') {
+			miniDisplayValue.textContent += displayValue.textContent + evt.target.innerText;
+		}
+
+		/*
+		in case the user has input the operator wrongly
+		we allow them to change
+		*/
+		else {
+			miniDisplayValue.textContent = miniDisplayValue.textContent.slice(0,-2);
+		}
+	}
 	miniDisplayValue.textContent += ' ' + displayValue.textContent + ' ' + evt.target.innerText;
 	if (secondNum === null && firstNum === 0) {
 		firstNum = Number(displayValue.textContent);
