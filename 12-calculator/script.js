@@ -39,7 +39,7 @@ const operate = (num1, num2, operator)=> {
 const displayValue = document.getElementById('display')
 const miniDisplayValue = document.getElementById('mini-display')
 const currentAnswer = document.getElementById('current-answer')
-var firstNum = 0;
+var firstNum = null;
 var secondNum = null;
 var previousAnswer = 0;
 
@@ -87,17 +87,29 @@ function updateMiniDisplay(evt) {
 			miniDisplayValue.textContent = miniDisplayValue.textContent.slice(0,-2);
 		}
 	}
+
+	// update mini display with num input and operator
 	miniDisplayValue.textContent += ' ' + displayValue.textContent + ' ' + evt.target.innerText;
-	if (secondNum === null && firstNum === 0) {
+	
+	
+	if (firstNum == null) {
 		firstNum = Number(displayValue.textContent);
 	}
 	else if (secondNum === null) {
 		secondNum = Number(displayValue.textContent);
 	}
-	firstNum = operate(firstNum, secondNum, evt.target.innerText);
+	let operator = '';
+	if (miniDisplayValue.textContent.length <5) {
+		operator = evt.target.innerText;
+	}
+	else if (miniDisplayValue.textContent.at(-5) == ' ') {
+		operator = miniDisplayValue.textContent.at(-6);
+	}
+	else operator = miniDisplayValue.textContent.at(-5);
+	firstNum = operate(firstNum, secondNum, operator);
 	previousAnswer = firstNum;
+	secondNum = null;
 	this.classList.add('selected');
-
 }
 
 // update current answer
