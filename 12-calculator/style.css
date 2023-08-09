@@ -30,29 +30,30 @@ body, html {
     background: #ffbf0d;
     text-align: right;
     border-top-right-radius: 25px;
-    flex: 3;
+    flex: 1;
     padding-top: 20px;
     padding-right: 20px;
+    padding-bottom: 20px;
     font-size: 0.9rem;
 }
 
 #current-answer {
     background: #ffbf0d;
-    height: 40px;
     border-top-left-radius: 25px;
     text-align: left;
     flex: 1;
     padding-top: 20px;
+    padding-bottom: 20px;
     padding-left: 20px;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
 }
 
 #display {
     background-color : #177eb8;
     text-align: right;
-    font-size: 2rem;
+    font-size: 1.4rem;
     flex: 1;
-    padding-top: 15px;
+    padding-top: 35px;
     padding-right: 20px;
 }
 
@@ -92,3 +93,6 @@ body, html {
 #clear, #divide, #multiply, #backspace, #minus, #plus, #answer {
     background-color: #99bcb3;
 }
+
+/* to do list
+1) resize layout */
