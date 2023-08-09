@@ -36,9 +36,17 @@ const operate = (num1, num2, operator)=> {
 
 
 	
-const displayValue = document.getElementById('display')
-const miniDisplayValue = document.getElementById('mini-display')
-const currentAnswer = document.getElementById('current-answer')
+const displayValue = document.getElementById('display');
+const miniDisplayValue = document.getElementById('mini-display');
+const currentAnswer = document.getElementById('current-answer');
+const btnPoint = document.getElementById('point');
+
+const btnOperateNodeList = document.getElementsByClassName('btn operate');
+const btnNumNodeList = document.getElementsByClassName('btn num');
+const btnFunctionNodeList = document.getElementsByClassName('btn function');
+
+let operator = '';
+
 var firstNum = null;
 var secondNum = null;
 var previousAnswer = 0;
