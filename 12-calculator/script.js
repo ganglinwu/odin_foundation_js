@@ -137,11 +137,11 @@ function updateMiniDisplay(evt) {
 	
 	if (firstNum == null) {
 		firstNum = Number(displayValue.textContent);
+		currentAnswer.textContent = String(firstNum);
 	}
 	else if (secondNum === null) {
 		secondNum = Number(displayValue.textContent);
 	}
-	let operator = '';
 	if (miniDisplayValue.textContent.length <5) {
 		operator = evt.target.innerText;
 	}
@@ -150,14 +150,14 @@ function updateMiniDisplay(evt) {
 	}
 	else operator = miniDisplayValue.textContent.at(-5);
 	firstNum = operate(firstNum, secondNum, operator);
-	previousAnswer = firstNum;
+	currentAnswer.textContent = String(firstNum);
 	secondNum = null;
-	this.classList.add('selected');
+	this.classList.add('selected'); 
 }
 
 // update current answer
 function updateCurrentAnswer() {
-	currentAnswer.textContent = previousAnswer;
+	currentAnswer.textContent = String(firstNum);
 	return
 }
 
