@@ -167,6 +167,18 @@ function clearDisplay() {
 	return
 }
 
+// clear mini display
+function clearMiniDisplay() {
+	miniDisplayValue.textContent = ''
+	return
+}
+
+// clear current answer display
+function clearCurrentAnswerDisplay() {
+	currentAnswer.textContent = ''
+	return
+}
+
 // remove classlist 'selected' after transition
 // this creates the button pop-up animation
 function removeSelectedClasslist(evt) {
@@ -176,12 +188,12 @@ function removeSelectedClasslist(evt) {
 		clearDisplay();
 	}
 	updateCurrentAnswer();
+	return
 }
 
 
 
 // event listener for numbers
-const btnNumNodeList = document.getElementsByClassName('btn num');
 let btnNumArr = Array.from(btnNumNodeList);
 
 btnNumArr.forEach((btn)=>{
