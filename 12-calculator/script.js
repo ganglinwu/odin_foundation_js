@@ -66,17 +66,23 @@ btnsArr.forEach((btn)=>{
 
 // update main display with numbers
 // updateDisplay handles different events
-// 1 if number button is selected
+// 1 if number button(includes Ans) is selected
 // 2 if decimal place is selected
-// 3 if equals is selected
-// 4 if clear(C) button is selected
-// 5 if backspace button is selected
+// 3 if operator button is selected
+// 4 if equals is selected
+// 5 if clear(C) button is selected
+// 6 if backspace button is selected
 function updateDisplay(evt) {
 	// event 1 - num buttons
 	if (evt.target.classList.value == 'btn num') {
-		displayValue.textContent += evt.target.innerText;
+		if (evt.target.innerText == 'Ans') {
+			displayValue.textContent = String(previousAnswer);
+		}
+		else {
+			displayValue.textContent += evt.target.innerText;
+	
+		}
 	}
-
 	// event 2 - decimal place button
 	else if (evt.target.innerText == '.') {
 		if (!displayValue.innerText.includes('.')) {
@@ -84,13 +90,18 @@ function updateDisplay(evt) {
 		}
 	}
 
-	//event 3 - equals button
+	// event 3 - operator button
+	else if (evt.target.classList.value == 'btn operate') {
+		clearDisplay();
+	}
+
+	//event 4 - equals button
 	else if (evt.target.innerText == '=') {
 		previousAnswer = Number(currentAnswer.textContent);
 		displayValue.textContent = previousAnswer;
 	}
 
-	//event 4 - clear button
+	//event 5 - clear button
 	else if (evt.target.innerText == 'C') {
 		clearDisplay();
 		clearMiniDisplay();
@@ -100,7 +111,7 @@ function updateDisplay(evt) {
 		operator = ''
 	}
 
-	//event 5 - backspace button
+	//event 6 - backspace button
 	else if (evt.target.innerText == '⌫') {
 		if (displayValue.textContent == '') {
 			miniDisplayValue.textContent = miniDisplayValue.textContent.slice(0,-2);
