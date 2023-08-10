@@ -39,17 +39,27 @@ const operate = (num1, num2, operator)=> {
 const displayValue = document.getElementById('display');
 const miniDisplayValue = document.getElementById('mini-display');
 const currentAnswer = document.getElementById('current-answer');
-const btnPoint = document.getElementById('point');
 
-const btnOperateNodeList = document.getElementsByClassName('btn operate');
-const btnNumNodeList = document.getElementsByClassName('btn num');
-const btnFunctionNodeList = document.getElementsByClassName('btn function');
+const btnsNodeList = document.getElementsByClassName('btn');
 
+let btnsArr = Array.from(btnsNodeList);
 let operator = '';
 
 var firstNum = null;
 var secondNum = null;
 var previousAnswer = 0;
+
+// event listener for all buttons
+
+btnsArr.forEach((btn)=>{
+	btn.addEventListener('transitionend', removeSelectedClasslist)
+	if (btn.classList.includes('function') || btn.classList.includes('operate')) {
+		btn.addEventListener('click', updateMiniDisplay)
+	}
+	else {
+		btn.addEventListener('click', updateDisplay)
+	}
+})
 
 // update main display with numbers
 // updateDisplay handles different events
@@ -190,41 +200,3 @@ function removeSelectedClasslist(evt) {
 	updateCurrentAnswer();
 	return
 }
-
-
-
-// event listener for numbers
-let btnNumArr = Array.from(btnNumNodeList);
-
-btnNumArr.forEach((btn)=>{
-	btn.addEventListener('transitionend', removeSelectedClasslist)
-	btn.addEventListener('click', updateDisplay)
-	})
-
-
-// event listener for decimal point
-btnPoint.addEventListener('transitionend', removeSelectedClasslist)
-btnPoint.addEventListener('click', updateDisplay)
-
-
-// event listener for operator buttons
-let btnOperateNodeListArr = Array.from(btnOperateNodeList);
-
-btnOperateNodeListArr.forEach((btn)=> {
-	btn.addEventListener('transitionend', removeSelectedClasslist)
-	btn.addEventListener('click', updateMiniDisplay)
-	})
-
-// event listener for function buttons
-let btnFunctionNodeListArr = Array.from(btnFunctionNodeList);
-
-btnFunctionNodeListArr.forEach((btn)=> {
-	btn.addEventListener('transitionend', removeSelectedClasslist)
-	btn.addEventListener('click', updateMiniDisplay)
-	})
-
-
-
-// divide button does not work as intended,
-// the problem can be replicated by using a long
-// string of numbers and various operators
