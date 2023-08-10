@@ -50,15 +50,18 @@ var secondNum = null;
 var previousAnswer = 0;
 
 // event listener for all buttons
+// types of button by css class names
+// 1 btn num - numbers
+// 2 btn - decimal point, previous answer
+// 3 btn operate - operators
+// 4 btn function - clear, equals, answer, percent
 
 btnsArr.forEach((btn)=>{
 	btn.addEventListener('transitionend', removeSelectedClasslist)
-	if (btn.classList.includes('function') || btn.classList.includes('operate')) {
+	if (btn.classList.value.includes('function') || btn.classList.value.includes('operate')) {
 		btn.addEventListener('click', updateMiniDisplay)
 	}
-	else {
-		btn.addEventListener('click', updateDisplay)
-	}
+	btn.addEventListener('click', updateDisplay)
 })
 
 // update main display with numbers
