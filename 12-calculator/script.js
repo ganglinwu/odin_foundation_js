@@ -52,18 +52,53 @@ var secondNum = null;
 var previousAnswer = 0;
 
 // update main display with numbers
+// updateDisplay handles different events
+// 1 if number button is selected
+// 2 if decimal place is selected
+// 3 if equals is selected
+// 4 if clear(C) button is selected
+// 5 if backspace button is selected
 function updateDisplay(evt) {
-	if (evt.target.innerText == '.') {
+	// event 1 - num buttons
+	if (evt.target.classList.value == 'btn num') {
+		displayValue.textContent += evt.target.innerText;
+	}
+
+	// event 2 - decimal place button
+	else if (evt.target.innerText == '.') {
 		if (!displayValue.innerText.includes('.')) {
 			displayValue.textContent += evt.target.innerText;
-			this.classList.add('selected');
 		}
 	}
-	else if (evt.target.classList.value == 'btn num') {
-		displayValue.textContent += evt.target.innerText;
-		this.classList.add('selected');
+
+	//event 3 - equals button
+	else if (evt.target.innerText == '=') {
+		previousAnswer = Number(currentAnswer.textContent);
+		displayValue.textContent = previousAnswer;
 	}
+
+	//event 4 - clear button
+	else if (evt.target.innerText == 'C') {
+		clearDisplay();
+		clearMiniDisplay();
+		clearCurrentAnswerDisplay();
+		firstNum = null;
+		secondNum = null;
+		operator = ''
+	}
+
+	//event 5 - backspace button
+	else if (evt.target.innerText == '⌫') {
+		if (displayValue.textContent == '') {
+			miniDisplayValue.textContent = miniDisplayValue.textContent.slice(0,-2);
+		}
+		else {
+			displayValue.textContent = displayValue.textContent.slice(0,-1);
+		}
+	}
+	
 	else return
+	this.classList.add('selected');
 }
 
 // update mini display
