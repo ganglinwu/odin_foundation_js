@@ -203,16 +203,22 @@ btnNumArr.forEach((btn)=>{
 
 
 // event listener for decimal point
-const btnPoint = document.getElementById('point');
 btnPoint.addEventListener('transitionend', removeSelectedClasslist)
 btnPoint.addEventListener('click', updateDisplay)
 
 
-// event listener for operators and equals button
-const btnOperate = document.getElementsByClassName('btn operate');
-let btnOperateArr = Array.from(btnOperate);
+// event listener for operator buttons
+let btnOperateNodeListArr = Array.from(btnOperateNodeList);
 
-btnOperateArr.forEach((btn)=> {
+btnOperateNodeListArr.forEach((btn)=> {
+	btn.addEventListener('transitionend', removeSelectedClasslist)
+	btn.addEventListener('click', updateMiniDisplay)
+	})
+
+// event listener for function buttons
+let btnFunctionNodeListArr = Array.from(btnFunctionNodeList);
+
+btnFunctionNodeListArr.forEach((btn)=> {
 	btn.addEventListener('transitionend', removeSelectedClasslist)
 	btn.addEventListener('click', updateMiniDisplay)
 	})
