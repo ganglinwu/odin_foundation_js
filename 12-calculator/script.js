@@ -59,10 +59,10 @@ var previousOperator = '';
 
 btnsArr.forEach((btn)=>{
 	btn.addEventListener('transitionend', removeSelectedClasslist)
+	btn.addEventListener('click', updateDisplay)
 	if (btn.classList.value.includes('function') || btn.classList.value.includes('operate')) {
 		btn.addEventListener('click', updateMiniDisplay)
 	}
-	btn.addEventListener('click', updateDisplay)
 })
 
 // update main display with numbers
