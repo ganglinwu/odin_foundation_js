@@ -52,9 +52,9 @@ var previousAnswer = 0;
 // event listener for all buttons
 // types of button by css class names
 // 1 btn num - numbers
-// 2 btn - decimal point, previous answer
+// 2 btn - decimal point, previous answer, clear,
 // 3 btn operate - operators
-// 4 btn function - clear, equals, answer, percent
+// 4 btn function -  equals, answer, percent
 
 btnsArr.forEach((btn)=>{
 	btn.addEventListener('transitionend', removeSelectedClasslist)
