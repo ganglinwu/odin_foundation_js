@@ -48,6 +48,7 @@ let operator = '';
 var firstNum = null;
 var secondNum = null;
 var previousAnswer = 0;
+var previousOperator = '';
 
 // event listener for all buttons
 // types of button by css class names
@@ -91,8 +92,12 @@ function updateDisplay(evt) {
 	}
 
 	// event 3 - operator button
-	else if (evt.target.classList.value == 'btn operate') {
-		clearDisplay();
+	else if (evt.target.classList.value.includes('btn operate')) {
+		if (operator != '') {
+			previousOperator = operator;
+			operator = evt.target.innerText;
+		}
+		else {previousOperator = operator = evt.target.innerText;}
 	}
 
 	//event 4 - equals button
@@ -109,6 +114,7 @@ function updateDisplay(evt) {
 		firstNum = null;
 		secondNum = null;
 		operator = ''
+		previousOperator = ''
 	}
 
 	//event 6 - backspace button
@@ -173,17 +179,9 @@ function updateMiniDisplay(evt) {
 	else if (secondNum === null) {
 		secondNum = Number(displayValue.textContent);
 	}
-	if (miniDisplayValue.textContent.length <5) {
-		operator = evt.target.innerText;
-	}
-	else if (miniDisplayValue.textContent.at(-5) == ' ') {
-		operator = miniDisplayValue.textContent.at(-6);
-	}
-	else operator = miniDisplayValue.textContent.at(-5);
-	firstNum = operate(firstNum, secondNum, operator);
+	firstNum = operate(firstNum, secondNum, previousOperator);
 	currentAnswer.textContent = String(firstNum);
 	secondNum = null;
-	this.classList.add('selected'); 
 }
 
 // update current answer
