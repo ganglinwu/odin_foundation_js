@@ -188,7 +188,12 @@ function updateMiniDisplay(evt) {
 
 // update current answer
 function updateCurrentAnswer() {
-	currentAnswer.textContent = String(firstNum);
+	if (currentAnswer.textContent === 'null' || currentAnswer.textContent === 'undefined') {
+		currentAnswer.textContent = ''
+	}
+	else {
+		currentAnswer.textContent = String(firstNum);
+	}
 	return
 }
 
