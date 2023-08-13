@@ -108,13 +108,7 @@ function updateDisplay(evt) {
 
 	//event 5 - clear button
 	else if (evt.target.innerText == 'C') {
-		clearDisplay();
-		clearMiniDisplay();
-		clearCurrentAnswerDisplay();
-		firstNum = null;
-		secondNum = null;
-		operator = ''
-		previousOperator = ''
+		clearAll();
 	}
 
 	//event 6 - backspace button
@@ -211,6 +205,16 @@ function clearMiniDisplay() {
 function clearCurrentAnswerDisplay() {
 	currentAnswer.textContent = ''
 	return
+}
+
+// clear all display and reset firstNum, secondNum, operator, previousOperator
+
+function clearAll() {
+	clearDisplay();
+	clearMiniDisplay();
+	clearCurrentAnswerDisplay();
+	firstNum = secondNum = null;
+	operator = previousOperator = '';
 }
 
 // remove classlist 'selected' after transition
