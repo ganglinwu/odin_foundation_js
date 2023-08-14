@@ -73,6 +73,7 @@ btnsArr.forEach((btn)=>{
 // 4 if equals is selected
 // 5 if clear(C) button is selected
 // 6 if backspace button is selected
+// 7 if % button is selected
 function updateDisplay(evt) {
 	// event 1 - num buttons
 	if (evt.target.classList.value == 'btn num') {
@@ -149,6 +150,27 @@ function updateDisplay(evt) {
 			displayValue.textContent = displayValue.textContent.slice(0,-1);
 		}
 		else return;
+	}
+	
+	//event 7 - % button
+	else if (evt.target.innerText == '%') {
+		if (miniDisplayValue.textContent == '') {
+			if (displayValue.textContent == '') {
+				return
+			}
+			else {
+				miniDisplayValue.textContent += displayValue.textContent + '%'
+				previousAnswer = firstNum = Math.round((Number(displayValue.textContent)/100 + Number.EPSILON) * 100) / 100;
+				displayValue.textContent = String(firstNum);
+			}
+		}
+		else {
+			secondNum = Number(displayValue.textContent)*firstNum/100;
+			firstNum = previousAnswer = operate(firstNum, secondNum, operator);
+			miniDisplayValue.textContent += ' ' + displayValue.textContent + '%'
+			displayValue.textContent = firstNum;
+			currentAnswer.textContent = firstNum;
+		}
 	}
 	else return;
 	this.classList.add('selected');
