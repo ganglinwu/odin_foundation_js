@@ -203,14 +203,21 @@ function updateMiniDisplay(evt) {
 	else if (secondNum === null) {
 		secondNum = Number(displayValue.textContent);
 	}
-	firstNum = operate(firstNum, secondNum, previousOperator);
-	currentAnswer.textContent = String(firstNum);
+	if (evt.target.innerText == '+' || evt.target.innerText == '-') {
+		firstNum = operate(firstNum, secondNum, previousOperator);
+	}
+	else {
+		if (secondNum === null) {
+			firstNum = operate(firstNum, 1, previousOperator)
+		}
+	}
+	currentAnswer.textContent = String(previousAnswer);
 	secondNum = null;
 }
 
 // update current answer
 function updateCurrentAnswer() {
-	if (currentAnswer.textContent === 'null' || currentAnswer.textContent === 'undefined') {
+	if (currentAnswer.textContent == 'null' || currentAnswer.textContent == 'undefined') {
 		currentAnswer.textContent = ''
 	}
 	else {
