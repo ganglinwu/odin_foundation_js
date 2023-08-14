@@ -76,6 +76,9 @@ btnsArr.forEach((btn)=>{
 function updateDisplay(evt) {
 	// event 1 - num buttons
 	if (evt.target.classList.value == 'btn num') {
+		if (miniDisplayValue.textContent.at(-1)=='=') {
+			clearAll();
+		}
 		if (evt.target.innerText == 'Ans') {
 			displayValue.textContent = String(previousAnswer);
 		}
@@ -86,6 +89,9 @@ function updateDisplay(evt) {
 	}
 	// event 2 - decimal place button
 	else if (evt.target.innerText == '.') {
+		if (miniDisplayValue.textContent.at(-1)=='=') {
+			clearAll();
+		}
 		if (!displayValue.innerText.includes('.')) {
 			displayValue.textContent += evt.target.innerText;
 		}
@@ -93,6 +99,10 @@ function updateDisplay(evt) {
 
 	// event 3 - operator button
 	else if (evt.target.classList.value.includes('btn operate')) {
+		if (miniDisplayValue.textContent.at(-1)=='=') {
+			clearAll();
+			displayValue.textContent = String(previousAnswer);
+		}
 		if (operator != '') {
 			previousOperator = operator;
 			operator = evt.target.innerText;
@@ -102,8 +112,30 @@ function updateDisplay(evt) {
 
 	//event 4 - equals button
 	else if (evt.target.innerText == '=') {
-		previousAnswer = Number(currentAnswer.textContent);
-		displayValue.textContent = previousAnswer;
+		if (miniDisplayValue.textContent.at(-1)== '=') {
+			clearDisplay();
+			clearMiniDisplay();
+			clearCurrentAnswerDisplay();
+			firstNum = secondNum = null;
+			displayValue.innerText += String(previousAnswer)
+		}
+		if (miniDisplayValue.textContent == '') {
+			if (displayValue.textContent == '') {
+				return
+			}
+			else {
+				previousAnswer = Number(displayValue.textContent);
+				displayValue.textContent = previousAnswer;
+			}
+		}
+		else {
+			miniDisplayValue.textContent += ' ' + displayValue.textContent + ' =';
+			firstNum = Number(currentAnswer.textContent);
+			secondNum = Number(displayValue.textContent);
+			firstNum = operate(firstNum, secondNum, operator);
+			previousAnswer = currentAnswer.textContent = displayValue.textContent = firstNum;
+		}
+		
 	}
 
 	//event 5 - clear button
@@ -164,8 +196,6 @@ function updateMiniDisplay(evt) {
 
 	// update mini display with num input and operator
 	miniDisplayValue.textContent += ' ' + displayValue.textContent + ' ' + evt.target.innerText;
-	
-	
 	if (firstNum == null) {
 		firstNum = Number(displayValue.textContent);
 		currentAnswer.textContent = String(firstNum);
