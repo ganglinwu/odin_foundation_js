@@ -145,20 +145,10 @@ function updateDisplay(evt) {
 
 	//event 6 - backspace button
 	else if (evt.target.innerText == '⌫') {
-		if (miniDisplayValue.textContent != '') {
-			if (displayValue.textContent != '') {
-				displayValue.textContent = displayValue.textContent.slice(0,-1);
-			}
-			else {
-				miniDisplayValue.textContent = miniDisplayValue.textContent.slice(0,-2);
-			}
+		if (displayValue.textContent != '') {
+			displayValue.textContent = displayValue.textContent.slice(0,-1);
 		}
-		else {
-			if (displayValue.textContent != '') {
-				displayValue.textContent = displayValue.textContent.slice(0,-1);
-			}
-			else return;
-		}
+		else return;
 	}
 	else return;
 	this.classList.add('selected');
