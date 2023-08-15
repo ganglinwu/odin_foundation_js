@@ -13,7 +13,14 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
 	const answer = (Number(num1) / Number(num2));
     const length = Math.floor(answer).toString().length;
-    return answer.toFixed(10-length);
+	if (Number(num2) == 0) {
+		alert('Division by zero is not allowed!')
+		clearAll();
+		return
+	}
+	else {
+		return answer.toFixed(10-length);
+	}
 };
 
 
@@ -221,6 +228,10 @@ function updateMiniDisplay(evt) {
 	else {
 		if (secondNum === null) {
 			firstNum = operate(firstNum, 1, previousOperator)
+		}
+		else if (evt.target.innerText == '÷' && secondNum == 0) {
+			alert('Division by zero is not allowed!')
+			displayValue.textContent = '';
 		}
 	}
 	currentAnswer.textContent = String(previousAnswer);
