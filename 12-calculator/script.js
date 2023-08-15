@@ -91,8 +91,10 @@ function updateDisplay(evt) {
 			displayValue.textContent = String(previousAnswer);
 		}
 		else {
-			displayValue.textContent += evt.target.innerText;
-	
+			if (displayValue.textContent.length <= 15) {
+				displayValue.textContent += evt.target.innerText;
+			}
+			else return;
 		}
 	}
 	// event 2 - decimal place button
