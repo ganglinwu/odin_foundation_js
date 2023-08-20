@@ -56,6 +56,7 @@ var firstNum = null;
 var secondNum = null;
 var previousAnswer = 0;
 var previousOperator = '';
+var ansButtonPressed = false;
 
 // event listener for all buttons
 // types of button by css class names
@@ -66,157 +67,268 @@ var previousOperator = '';
 
 btnsArr.forEach((btn)=>{
 	btn.addEventListener('transitionend', removeSelectedClasslist)
-	btn.addEventListener('click', updateDisplay)
-	if (btn.classList.value.includes('function') || btn.classList.value.includes('operate')) {
-		btn.addEventListener('click', updateMiniDisplay)
-	}
+	btn.addEventListener('click', checkMouseClick)
 })
 
-// update main display with numbers
-// updateDisplay handles different events
-// 1 if number button(includes Ans) is selected
-// 2 if decimal place is selected
-// 3 if operator button is selected
-// 4 if equals is selected
-// 5 if clear(C) button is selected
-// 6 if backspace button is selected
-// 7 if % button is selected
-function updateDisplay(evt) {
-	// event 1 - num buttons
-	if (evt.target.classList.value == 'btn num') {
-		if (miniDisplayValue.textContent.at(-1)=='=') {
-			clearAll();
-		}
-		if (evt.target.innerText == 'Ans') {
-			displayValue.textContent = String(previousAnswer);
-		}
-		else {
-			if (displayValue.textContent.length <= 15) {
-				displayValue.textContent += evt.target.innerText;
-			}
-			else return;
-		}
+// helper function to check mouseclick
+function checkMouseClick(evt) {
+	// 1 num button click
+	if (Number(evt.target.innerText)<10) {
+		updateDisplayNum(evt.target.innerText);
 	}
-	// event 2 - decimal place button
+	// 2 decimal point keypress
 	else if (evt.target.innerText == '.') {
-		if (miniDisplayValue.textContent.at(-1)=='=') {
-			clearAll();
-		}
-		if (!displayValue.innerText.includes('.')) {
-			displayValue.textContent += evt.target.innerText;
-		}
+		updateDisplayDecimal();
 	}
-
-	// event 3 - operator button
-	else if (evt.target.classList.value.includes('btn operate')) {
-		if (miniDisplayValue.textContent.at(-1)=='=') {
-			clearAll();
-			displayValue.textContent = String(previousAnswer);
-		}
-		if (operator != '') {
-			previousOperator = operator;
-			operator = evt.target.innerText;
-		}
-		else {previousOperator = operator = evt.target.innerText;}
+	// 3 backspace keypresss
+	else if (evt.target.innerText == '⌫') {
+		updateDisplayBackspace();
 	}
-
-	//event 4 - equals button
+	// 4 +-x/ keypress
+	else if (['+', '-', '×', '÷'].includes(evt.target.innerText)) {
+		updateDisplayOperator(evt.target.innerText);
+		updateMiniDisplayOperator(evt.target.innerText);
+	}
+	// 5 Enter keypress > equals
 	else if (evt.target.innerText == '=') {
-		if (miniDisplayValue.textContent.at(-1)== '=') {
-			clearDisplay();
-			clearMiniDisplay();
-			clearCurrentAnswerDisplay();
-			firstNum = secondNum = null;
-			displayValue.innerText += String(previousAnswer)
-		}
-		if (miniDisplayValue.textContent == '') {
-			if (displayValue.textContent == '') {
-				return
-			}
-			else {
-				previousAnswer = Number(displayValue.textContent);
-				displayValue.textContent = previousAnswer;
-			}
-		}
-		else {
-			miniDisplayValue.textContent += ' ' + displayValue.textContent + ' =';
-			firstNum = Number(currentAnswer.textContent);
-			secondNum = Number(displayValue.textContent);
-			firstNum = operate(firstNum, secondNum, operator);
-			previousAnswer = currentAnswer.textContent = displayValue.textContent = firstNum;
-		}
-		
+		updateDisplayEquals();
 	}
-
-	//event 5 - clear button
-	else if (evt.target.innerText == 'C') {
+	// 6 % keypress
+	else if (evt.target.innerText == '%') {
+		updateDisplayPercent();
+	}
+	// 7 Escape keypress > Clear
+	else if  (evt.target.innerText.toUpperCase() == 'C') {
 		clearAll();
 	}
+	evt.target.classList.add('selected');
+	return;
+}
 
-	//event 6 - backspace button
-	else if (evt.target.innerText == '⌫') {
-		if (displayValue.textContent != '') {
-			displayValue.textContent = displayValue.textContent.slice(0,-1);
-		}
-		else return;
+
+// event listener for keyboard
+document.addEventListener('keydown', checkKeyPress);
+
+// helper function to check keypress
+function checkKeyPress(evt) {
+	// initialize var called id for querySelector at end of function
+	var id=''
+	// 1 num type keypress
+	if (Number(evt.key)<10) {
+		updateDisplayNum(evt.key);
+		id = evt.key;
 	}
-	
-	//event 7 - % button
-	else if (evt.target.innerText == '%') {
-		if (miniDisplayValue.textContent == '') {
-			if (displayValue.textContent == '') {
-				return
-			}
-			else {
-				miniDisplayValue.textContent += displayValue.textContent + '%'
-				previousAnswer = firstNum = Math.round((Number(displayValue.textContent)/100 + Number.EPSILON) * 100) / 100;
-				displayValue.textContent = String(firstNum);
-			}
+	// 2 decimal point keypress
+	else if (evt.key == '.') {
+		updateDisplayDecimal();
+		id = evt.key;
+	}
+	// 3 backspace keypresss
+	else if (evt.key == 'Backspace') {
+		updateDisplayBackspace();
+		id = 'backspace'
+	}
+	// 4a +- keypress
+	else if (['+', '-'].includes(evt.key)) {
+		updateDisplayOperator(evt.key);
+		updateMiniDisplayOperator(evt.key);
+		if (evt.key == '+') {
+			id = 'plus';
 		}
+		else id = 'minus';
+	}
+	// 4b x keypress
+	else if (evt.key=='*') {
+		updateDisplayOperator('×');
+		updateMiniDisplayOperator('×');
+		id = 'multiply'
+	}
+	// 4c / keypress
+	else if (evt.key=='/') {
+		updateDisplayOperator('÷');
+		updateMiniDisplayOperator('÷');
+		id = 'divide'
+	}
+	// 5 Enter keypress > equals
+	else if (evt.key == 'Enter') {
+		updateDisplayEquals();
+		id = 'equal'
+	}
+	// 6 % keypress
+	else if (evt.key == '%') {
+		updateDisplayPercent();
+		id = 'percent'
+	}
+	// 7 Escape keypress > Clear
+	else if  (evt.key == 'Escape') {
+		clearAll();
+		id = 'clear'
+	}
+	// 8 @ keypress > Ans
+	else if (evt.key.toUpperCase() == 'A') {
+		if (ansButtonPressed) return;
 		else {
-			secondNum = Number(displayValue.textContent)*firstNum/100;
-			firstNum = previousAnswer = operate(firstNum, secondNum, operator);
-			miniDisplayValue.textContent += ' ' + displayValue.textContent + '%'
-			displayValue.textContent = firstNum;
-			currentAnswer.textContent = firstNum;
+			updateDisplayNum(previousAnswer);
+			id = 'answer';
+			ansButtonPressed = true;
 		}
 	}
 	else return;
-	this.classList.add('selected');
+	let btn = document.querySelector(`button[id = '${id}']`)
+	btn.classList.add('selected');
+	return;
 }
 
-// update mini display
-function updateMiniDisplay(evt) {
+
+
+// the following functions update the main display
+// 1 updateDisplayNum - if number button is selected
+// 2 updateDisplayDecimal - if decimal place is selected
+// 3 updateDisplayBackspace - if backspace button is selected
+// 4 updateDisplayOperator - if operator button is selected
+// 5 updateDisplayEquals - if equals is selected
+// 6 updateDisplayPercent - if % button is selected
+// 7 updateDisplayAnswer if answer button is selected
+
+
+// 1 update display when num buttons selected
+function updateDisplayNum(num) {
+	if (miniDisplayValue.textContent.at(-1)=='=') {
+		clearAll();
+		updateDisplayNum(num);
+	}
+	else {
+		if (displayValue.textContent.length <= 15) {
+			displayValue.textContent += num;
+		}
+		else return;
+	}
+	return;
+}
+
+
+
+// 2 update main display when decimal place button selected
+function updateDisplayDecimal() {
+	if (miniDisplayValue.textContent.at(-1)=='=') {
+		clearAll();
+	}
+	if (!displayValue.innerText.includes('.')) {
+		displayValue.textContent += '.';
+	}
+}
+
+// 3 update display when backspace button selected
+function updateDisplayBackspace() {
+	if (displayValue.textContent != '') {
+		displayValue.textContent = displayValue.textContent.slice(0,-1);
+	}
+	else return;
+}
+
+// 4 update main display when operator button selected, then update miniDisplay
+function updateDisplayOperator(userInputOperator) {
+	if (miniDisplayValue.textContent.at(-1)=='=') {
+		clearAll();
+		displayValue.textContent = String(previousAnswer);
+	}
+	if (operator != '') {
+		previousOperator = operator;
+		operator = userInputOperator;
+	}
+	else {previousOperator = operator = userInputOperator;}
+	}
+
+// 5 update main display when equals button selected, then update miniDisplay
+function updateDisplayEquals(){
+	if (miniDisplayValue.textContent.at(-1)== '=') {
+		clearDisplay();
+		clearMiniDisplay();
+		clearCurrentAnswerDisplay();
+		firstNum = secondNum = null;
+		displayValue.innerText += String(previousAnswer)
+		ansButtonPressed = true;
+	}
+	if (miniDisplayValue.textContent == '') {
+		if (displayValue.textContent == '') {
+			return
+		}
+		else {
+			previousAnswer = Number(displayValue.textContent);
+			displayValue.textContent = previousAnswer;
+		}
+	}
+	else {
+		miniDisplayValue.textContent += ' ' + displayValue.textContent + ' =';
+		firstNum = Number(currentAnswer.textContent);
+		secondNum = Number(displayValue.textContent);
+		firstNum = operate(firstNum, secondNum, operator);
+		previousAnswer = currentAnswer.textContent = displayValue.textContent = firstNum;
+		ansButtonPressed = false;
+	}	
+}
+
+// 6 update display when % button selected then, update miniDisplay
+function updateDisplayPercent() {
+	if (miniDisplayValue.textContent == '') {
+		if (displayValue.textContent == '') {
+			return
+		}
+		else {
+			miniDisplayValue.textContent += displayValue.textContent + '%' + ' ='
+			previousAnswer = firstNum = Math.round((Number(displayValue.textContent)/100 + Number.EPSILON) * 100) / 100;
+			displayValue.textContent = String(firstNum);
+		}
+	}
+	else {
+		secondNum = Number(displayValue.textContent)*firstNum/100;
+		firstNum = previousAnswer = operate(firstNum, secondNum, operator);
+		miniDisplayValue.textContent += ' ' + displayValue.textContent + '%' + ' ='
+		displayValue.textContent = firstNum;
+		currentAnswer.textContent = firstNum;
+	}
+	ansButtonPressed = false;
+}
+
+// 7 clear all display and reset firstNum, secondNum, operator, previousOperator 
+// note previousAnswer shall not be cleared!
+function clearAll() {
+	clearDisplay();
+	clearMiniDisplay();
+	clearCurrentAnswerDisplay();
+	firstNum = secondNum = null;
+	operator = previousOperator = '';
+	ansButtonPressed = false;
+}
+
+function updateMiniDisplayOperator(userInputOperator) {
 	//when main display is blank
 	if (displayValue.textContent == '') { 
-
 		//we do not want user to keep inputting ++++++++
-		if (miniDisplayValue.textContent.at(-1) == evt.target.innerText){
+		if (miniDisplayValue.textContent.at(-1) == userInputOperator){
 			return 
 		}
 
-		/*
-		However we want to allow users to multiply or divide 
-		by negative numbers
-		*/
-		else if (evt.target.innerText == '-' && miniDisplayValue.textContent.at(-1)=='÷') {
-			miniDisplayValue.textContent += displayValue.textContent + evt.target.innerText;
+		//However we want to allow users to multiply or divide 
+		//by negative numbers
+		else if (userInputOperator == '-' && miniDisplayValue.textContent.at(-1)=='÷') {
+			miniDisplayValue.textContent += displayValue.textContent + userInputOperator;
+			return;
 		}
-		else if (evt.target.innerText == '-' && miniDisplayValue.textContent.at(-1)=='x') {
-			miniDisplayValue.textContent += displayValue.textContent + evt.target.innerText;
+		else if (userInputOperator == '-' && miniDisplayValue.textContent.at(-1)=='×') {
+			miniDisplayValue.textContent += displayValue.textContent + userInputOperator;
+			return;
 		}
 
-		/*
-		in case the user has input the operator wrongly
-		we allow them to change
-		*/
+		//in case the user has input the operator wrongly
+		//we allow them to change
 		else {
 			miniDisplayValue.textContent = miniDisplayValue.textContent.slice(0,-2);
 		}
 	}
 
 	// update mini display with num input and operator
-	miniDisplayValue.textContent += ' ' + displayValue.textContent + ' ' + evt.target.innerText;
+	miniDisplayValue.textContent += ' ' + displayValue.textContent + ' ' + userInputOperator;
 	if (firstNum == null) {
 		firstNum = Number(displayValue.textContent);
 		currentAnswer.textContent = String(firstNum);
@@ -224,20 +336,23 @@ function updateMiniDisplay(evt) {
 	else if (secondNum === null) {
 		secondNum = Number(displayValue.textContent);
 	}
-	if (evt.target.innerText == '+' || evt.target.innerText == '-') {
+	if (previousOperator == '+' || previousOperator == '-') {
 		firstNum = operate(firstNum, secondNum, previousOperator);
 	}
 	else {
 		if (secondNum === null) {
 			firstNum = operate(firstNum, 1, previousOperator)
 		}
-		else if (evt.target.innerText == '÷' && secondNum == 0) {
+		else if (userInputOperator == '÷' && secondNum == 0) {
 			alert('Division by zero is not allowed!')
 			displayValue.textContent = '';
 		}
+		else firstNum = operate(firstNum, secondNum, previousOperator)
 	}
-	currentAnswer.textContent = String(previousAnswer);
+	currentAnswer.textContent = String(firstNum);
 	secondNum = null;
+	clearDisplay();
+	ansButtonPressed = false;
 }
 
 // update current answer
@@ -267,16 +382,6 @@ function clearMiniDisplay() {
 function clearCurrentAnswerDisplay() {
 	currentAnswer.textContent = ''
 	return
-}
-
-// clear all display and reset firstNum, secondNum, operator, previousOperator
-
-function clearAll() {
-	clearDisplay();
-	clearMiniDisplay();
-	clearCurrentAnswerDisplay();
-	firstNum = secondNum = null;
-	operator = previousOperator = '';
 }
 
 // remove classlist 'selected' after transition
