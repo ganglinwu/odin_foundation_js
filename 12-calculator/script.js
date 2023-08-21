@@ -245,9 +245,17 @@ function updateDisplayOperator(userInputOperator) {
 		clearAll();
 		displayValue.textContent = String(previousAnswer);
 	}
+	if (displayValue.textContent.at(0)== '-' && userInputOperator == '-') {
+		displayValue.textContent = displayValue.textContent.slice(1);
+	}
 	if (operator != '') {
-		previousOperator = operator;
-		operator = userInputOperator;
+		if (Number(displayValue.textContent)<0) {
+			operator = userInputOperator;
+		}
+		else {
+			previousOperator = operator;
+			operator = userInputOperator;
+		}
 	}
 	else {previousOperator = operator = userInputOperator;}
 	}
@@ -275,7 +283,11 @@ function updateDisplayEquals(){
 		miniDisplayValue.textContent += ' ' + displayValue.textContent + ' =';
 		firstNum = Number(currentAnswer.textContent);
 		secondNum = Number(displayValue.textContent);
-		firstNum = operate(firstNum, secondNum, operator);
+		// check if we are operating with -ve number
+		if (Number(displayValue.textContent) >= 0){
+			firstNum = operate(firstNum, secondNum, operator);
+		} 
+		else firstNum = operate(firstNum, secondNum, previousOperator);
 		previousAnswer = currentAnswer.textContent = displayValue.textContent = firstNum;
 		ansButtonPressed = false;
 	}	
@@ -325,11 +337,11 @@ function updateMiniDisplayOperator(userInputOperator) {
 		//However we want to allow users to multiply or divide 
 		//by negative numbers
 		else if (userInputOperator == '-' && miniDisplayValue.textContent.at(-1)=='÷') {
-			miniDisplayValue.textContent += displayValue.textContent + userInputOperator;
+			displayValue.textContent += '-';
 			return;
 		}
 		else if (userInputOperator == '-' && miniDisplayValue.textContent.at(-1)=='×') {
-			miniDisplayValue.textContent += displayValue.textContent + userInputOperator;
+			displayValue.textContent += '-';
 			return;
 		}
 
