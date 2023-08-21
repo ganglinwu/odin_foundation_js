@@ -132,9 +132,12 @@ function checkKeyPress(evt) {
 		id = evt.key;
 	}
 	// 2 decimal point keypress
-	else if (evt.key == '.') {
+	// so on the keyboard there are 2 possible keys users might use
+	// one is the fullstop(period) button
+	// the other is on the numpad, which is the decimal point button
+	else if (evt.key == '.' || evt.key == '.') {
 		updateDisplayDecimal();
-		id = evt.key;
+		id = 'point';
 	}
 	// 3 backspace keypresss
 	else if (evt.key == 'Backspace') {
@@ -245,19 +248,29 @@ function updateDisplayOperator(userInputOperator) {
 		clearAll();
 		displayValue.textContent = String(previousAnswer);
 	}
+	// if the number in main display is already -ve
+	// pressing '-' again removes the -ve sign
 	if (displayValue.textContent.at(0)== '-' && userInputOperator == '-') {
 		displayValue.textContent = displayValue.textContent.slice(1);
 	}
 	if (operator != '') {
+		// if we are operating with -ve number 
+		// supercede operator(which is '-') with userInputOperator
 		if (Number(displayValue.textContent)<0) {
 			operator = userInputOperator;
 		}
 		else {
+			// for long chains of miniDisplay
+			// we have to store the previous operator
 			previousOperator = operator;
 			operator = userInputOperator;
 		}
 	}
-	else {previousOperator = operator = userInputOperator;}
+	else {
+		// else this would be the first operator
+		// we will force previousOperator to be the same as operator
+		previousOperator = operator = userInputOperator;
+	}
 	}
 
 // 5 update main display when equals button selected, then update miniDisplay
@@ -287,7 +300,11 @@ function updateDisplayEquals(){
 		if (Number(displayValue.textContent) >= 0){
 			firstNum = operate(firstNum, secondNum, operator);
 		} 
-		else firstNum = operate(firstNum, secondNum, previousOperator);
+		else {
+			// if operating with -ve num, ignore current operator(which is '-')
+			// and use the previousOperator
+			firstNum = operate(firstNum, secondNum, previousOperator);
+		}
 		previousAnswer = currentAnswer.textContent = displayValue.textContent = firstNum;
 		ansButtonPressed = false;
 	}	
