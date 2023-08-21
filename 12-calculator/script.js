@@ -317,6 +317,14 @@ function updateDisplayEquals(){
 
 // 6 update display when % button selected then, update miniDisplay
 function updateDisplayPercent() {
+	if (miniDisplayValue.textContent.at(-1)== '=') {
+		clearDisplay();
+		clearMiniDisplay();
+		clearCurrentAnswerDisplay();
+		firstNum = secondNum = null;
+		displayValue.innerText += String(previousAnswer)
+		ansButtonPressed = true;
+	}
 	if (miniDisplayValue.textContent == '') {
 		if (displayValue.textContent == '') {
 			return
