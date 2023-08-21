@@ -114,6 +114,11 @@ function checkMouseClick(evt) {
 	else if  (evt.target.innerText.toUpperCase() == 'C') {
 		clearAll();
 	}
+	// 8 Ans button click
+	else if (evt.target.innerText == 'Ans') {
+		updateDisplayNum(previousAnswer);
+	}
+	else return;
 	evt.target.classList.add('selected');
 	return;
 }
