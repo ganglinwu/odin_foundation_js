@@ -89,29 +89,29 @@ function checkMouseClick(evt) {
 	if (Number(evt.target.innerText)<10) {
 		updateDisplayNum(evt.target.innerText);
 	}
-	// 2 decimal point keypress
+	// 2 decimal button click
 	else if (evt.target.innerText == '.') {
 		updateDisplayDecimal();
 	}
-	// 3 backspace keypresss
+	// 3 backspace button click
 	else if (evt.target.innerText == '⌫') {
 		updateDisplayBackspace();
 	}
-	// 4 +-x/ keypress
+	// 4 +-x/ button click
 	else if (['+', '-', '×', '÷'].includes(evt.target.innerText)) {
 		updateDisplayOperator(evt.target.innerText);
 		updateMiniDisplayOperator(evt.target.innerText);
 	}
-	// 5 Enter keypress > equals
+	// 5 equal button click
 	else if (evt.target.innerText == '=') {
 		updateDisplayEquals();
 	}
-	// 6 % keypress
+	// 6 % button click
 	else if (evt.target.innerText == '%') {
 		updateDisplayPercent();
 	}
-	// 7 Escape keypress > Clear
-	else if  (evt.target.innerText.toUpperCase() == 'C') {
+	// 7 clear button click
+	else if (evt.target.innerText.toUpperCase() == 'C') {
 		clearAll();
 	}
 	// 8 Ans button click
