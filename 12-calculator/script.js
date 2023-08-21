@@ -411,12 +411,7 @@ function clearCurrentAnswerDisplay() {
 
 // remove classlist 'selected' after transition
 // this creates the button pop-up animation
-function removeSelectedClasslist(evt) {
+function removeSelectedClasslist() {
 	this.classList.remove('selected');
-	if (evt.target.classList.value == 'btn operate') 
-	{ 
-		clearDisplay();
-	}
-	updateCurrentAnswer();
 	return
 }
