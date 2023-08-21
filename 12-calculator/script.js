@@ -1,28 +1,41 @@
 function add(num1, num2) {
-	return (Number(num1) + Number(num2));
-};
+	let ans = Number(num1) + Number(num2);
+	return checkAnswerLength(ans);
+}
 
 function subtract(num1, num2) {
-	return Number(num1) - Number(num2);
-};
+	let ans = Number(num1) - Number(num2);
+	return checkAnswerLength(ans);
+}
 
 function multiply(num1, num2) {
-	return Number(num1) * Number(num2);
-};
+	let ans = Number(num1) * Number(num2);
+	return checkAnswerLength(ans);
+}
 
 function divide(num1, num2) {
-	const answer = (Number(num1) / Number(num2));
-    const length = Math.floor(answer).toString().length;
 	if (Number(num2) == 0) {
 		alert('Division by zero is not allowed!')
 		clearAll();
 		return
 	}
 	else {
-		return answer.toFixed(10-length);
+		let ans = (Number(num1) / Number(num2));
+		return checkAnswerLength(ans);
 	}
-};
+}
 
+
+// helper function to check if too many decimal places
+// and reduce to 14 decimal place
+
+function checkAnswerLength(num) {
+	if (String(num).length >= 15) {
+		num = num.toFixed(14);
+		return num;
+	}
+	else return num;
+}
 
 const operate = (num1, num2, operator)=> {
     switch(operator) {
@@ -347,7 +360,7 @@ function updateMiniDisplayOperator(userInputOperator) {
 			alert('Division by zero is not allowed!')
 			displayValue.textContent = '';
 		}
-		else firstNum = operate(firstNum, secondNum, previousOperator)
+		else firstNum = operate(firstNum, secondNum, previousOperator);
 	}
 	currentAnswer.textContent = String(firstNum);
 	secondNum = null;
